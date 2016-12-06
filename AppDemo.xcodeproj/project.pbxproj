@@ -13,6 +13,8 @@
 		50AB0EB41DF5D7FA00D0C5B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50AB0EB31DF5D7FA00D0C5B8 /* Assets.xcassets */; };
 		50AB0EB71DF5D7FA00D0C5B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50AB0EB51DF5D7FA00D0C5B8 /* LaunchScreen.storyboard */; };
 		50AB0EBF1DF5F71800D0C5B8 /* FilaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB0EBE1DF5F71800D0C5B8 /* FilaTableViewCell.swift */; };
+		B30888771DF71A6100EF257F /* DetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30888761DF71A6100EF257F /* DetalleViewController.swift */; };
+		B34EFBD71DF739A900F9634E /* AgregarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34EFBD61DF739A900F9634E /* AgregarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		50AB0EB61DF5D7FA00D0C5B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50AB0EB81DF5D7FA00D0C5B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50AB0EBE1DF5F71800D0C5B8 /* FilaTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilaTableViewCell.swift; sourceTree = "<group>"; };
+		B30888761DF71A6100EF257F /* DetalleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleViewController.swift; sourceTree = "<group>"; };
+		B34EFBD61DF739A900F9634E /* AgregarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgregarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				50AB0EB51DF5D7FA00D0C5B8 /* LaunchScreen.storyboard */,
 				50AB0EB81DF5D7FA00D0C5B8 /* Info.plist */,
 				50AB0EBE1DF5F71800D0C5B8 /* FilaTableViewCell.swift */,
+				B30888761DF71A6100EF257F /* DetalleViewController.swift */,
+				B34EFBD61DF739A900F9634E /* AgregarViewController.swift */,
 			);
 			path = AppDemo;
 			sourceTree = "<group>";
@@ -139,9 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30888771DF71A6100EF257F /* DetalleViewController.swift in Sources */,
 				50AB0EAF1DF5D7FA00D0C5B8 /* ViewController.swift in Sources */,
 				50AB0EAD1DF5D7FA00D0C5B8 /* AppDelegate.swift in Sources */,
 				50AB0EBF1DF5F71800D0C5B8 /* FilaTableViewCell.swift in Sources */,
+				B34EFBD71DF739A900F9634E /* AgregarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +311,7 @@
 				50AB0EBD1DF5D7FA00D0C5B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
