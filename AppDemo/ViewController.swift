@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetalleViewControllerDelegate, AgregarViewCotrollerDelegate {
     
@@ -14,12 +15,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var filaSeleccionada = -1
     var esEdicion = false
     
+    @IBOutlet weak var uiProfileImage: UIImageView!
+    @IBOutlet weak var lblNombre: UILabel!
     @IBOutlet weak var tblTabla: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         print("Vista cargada")
+        lblNombre.text = "Gato con botas"
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +34,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func btnAgregar_Click(_ sender: Any) {
         performSegue(withIdentifier: "Agregar Segue", sender: self)
+    }
+    
+    
+    @IBAction func btnRefresh_Click(_ sender: Any) {
+        let idFacebook = FBSDKAccessToken.current().userID
+        let cadenaUrl = "http://graph.facebook.com/\(idFacebook!)/picture?type=large"
+        let url = URL(string: cadenaUrl)
+        let dato: Data?
+        
+        do {
+            dato = try Data(contentsOf: url!)
+            uiProfileImage.image = UIImage(data: dato!)
+        } catch {
+            print("Error cargando la imagen.! \(error.localizedDescription)")
+            dato = nil
+            uiProfileImage.image = UIImage(named: "gato.jpg")
+            
+        }
     }
     
     func numeroCambiado(numero: Int) {
@@ -114,10 +136,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        let proto = (indexPath.row % 2 == 0) ? "proto1" : "proto2"
+        //let proto = (indexPath.row % 2 == 0) ? "proto1" : "proto2"
         
         
-        let vista = tableView.dequeueReusableCell(withIdentifier: proto, for: indexPath) as! FilaTableViewCell
+        let vista = tableView.dequeueReusableCell(withIdentifier: "proto1", for: indexPath) as! FilaTableViewCell
         
         //if(indexPath.row % 2 == 0){
        //     vista.lblIzquierda.text = datos[indexPath.row].0
