@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Firebase
 import FBSDKLoginKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetalleViewControllerDelegate, AgregarViewCotrollerDelegate {
     
+    var rootRef: FIRDatabaseReference?
+    
     var datos = [("Luis", 30), ("Kike", 28)]
+    var arreglo: [(nombre: String, edad: Int, genero: String, foto: String)] = []
     var filaSeleccionada = -1
     var esEdicion = false
     
@@ -21,23 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        print("Vista cargada")
-        lblNombre.text = "Gato con botas"
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    @IBAction func btnAgregar_Click(_ sender: Any) {
-        performSegue(withIdentifier: "Agregar Segue", sender: self)
-    }
-    
-    
-    @IBAction func btnRefresh_Click(_ sender: Any) {
+        
         let idFacebook = FBSDKAccessToken.current().userID
         let cadenaUrl = "http://graph.facebook.com/\(idFacebook!)/picture?type=large"
         let url = URL(string: cadenaUrl)
@@ -52,6 +40,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             uiProfileImage.image = UIImage(named: "gato.jpg")
             
         }
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        rootRef = FIRDatabase.database().reference()
+        
+        sincronizar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.rootRef!.child("base").observe(.value, with: {
+            (snap: FIRDataSnapshot) in self.lblNombre.text = "\(snap.value!)"
+        })
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func btnAgregar_Click(_ sender: Any) {
+        performSegue(withIdentifier: "Agregar Segue", sender: self)
+    }
+
+    
+    @IBAction func btnRefresh_Click(_ sender: Any) {
+        let valor = Int(lblNombre.text!)!
+        rootRef?.child("base").setValue(valor + 1)
     }
     
     func numeroCambiado(numero: Int) {
@@ -112,7 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datos.count
+        return arreglo.count
     }
     
     
@@ -139,7 +154,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //let proto = (indexPath.row % 2 == 0) ? "proto1" : "proto2"
         
         
-        let vista = tableView.dequeueReusableCell(withIdentifier: "proto1", for: indexPath) as! FilaTableViewCell
+        let view = tableView.dequeueReusableCell(withIdentifier: "proto1", for: indexPath) as! FilaTableViewCell
         
         //if(indexPath.row % 2 == 0){
        //     vista.lblIzquierda.text = datos[indexPath.row].0
@@ -148,10 +163,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
            // vista.lblDerecha.text = "\(datos[indexPath.row].1)"
         //}
         
-        vista.lblIzquierda.text = datos[indexPath.row].0
-        vista.lblDerecha.text = "\(datos[indexPath.row].1)"
+        let dato = arreglo[indexPath.row]
         
-        return vista
+        view.lblIzquierda.text = "\(dato.nombre)"
+        view.lblDerecha.text = "\(dato.edad)"
+        
+        if(dato.genero == "m") {
+            view.imgFoto.image = UIImage(named: "user_female")
+        } else {
+            view.imgFoto.image = UIImage(named: "user_male")
+        }
+        
+        view.imgFoto.downloadData(url: dato.foto)
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -159,6 +184,69 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //Detalle Segue
         filaSeleccionada = indexPath.row
         performSegue(withIdentifier: "Detalle Segue", sender: self)
+    }
+    
+    func sincronizar(){
+        
+        let url = URL(string: "http://kke.mx/demo/contacto.php")
+        
+        var request = URLRequest(url: url!, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 1000)
+        
+        request.httpMethod = "GET"
+        
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: request, completionHandler: {data, response, error -> Void in
+            guard (error == nil) else{
+                print ("Ocurrio un error con la peticion: \(error)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                print("Ocurrio un error con la respuesta")
+                return
+            }
+            
+            if (!(statusCode >= 200 && statusCode <= 299)) {
+                print("Respuesta no valida")
+                return
+            }
+            
+            let cad = String(data: data!, encoding: .utf8)
+            print("Response: \(response!.description)")
+            print("Error: \(error)")
+            print("Data: \(cad!)")
+            
+            var parsedResult: Any!
+            
+            do {
+                parsedResult = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
+            } catch {
+                parsedResult = nil
+                print("Error: \(error)")
+                return
+            }
+            
+            guard let datos = (parsedResult as? Dictionary<String, Any?>)?["datos"] as? [Dictionary<String, Any>]! else {
+                print("Error: \(error)")
+                return
+            }
+            
+            self.arreglo.removeAll()
+            
+            for d in datos {
+                let nombre = (d["nombre"] as! String)
+                let edad = (d["edad"] as! Int)
+                let foto = (d["foto"] as! String)
+                let genero = (d["genero"] as! String)
+                
+                self.arreglo.append(nombre: nombre, edad: edad, genero: genero, foto: foto)
+            }
+        
+            self.tblTabla.reloadData()
+        })
+        
+        task.resume()
     }
 }
 
