@@ -132,10 +132,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let eliminar = UITableViewRowAction(style: .destructive, title: "Borrar", handler: borrarFila)
-        let editar = UITableViewRowAction(style: .normal, title: "Editar", handler: editarFila)
+        //let eliminar = UITableViewRowAction(style: .destructive, title: "Borrar", handler: borrarFila)
+        //let editar = UITableViewRowAction(style: .normal, title: "Editar", handler: editarFila)
         
-        return [eliminar, editar]
+        let borrar = UITableViewRowAction(style: .destructive, title: "Borrar", handler: borrarFila)
+        
+        return [borrar]
     }
     
     func borrarFila(sender: UITableViewRowAction, indexPath: IndexPath){
@@ -188,7 +190,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func sincronizar(){
         
-        let url = URL(string: "http://kke.mx/demo/contacto.php")
+        let url = URL(string: "http://kke.mx/demo/contactos2.php")
         
         var request = URLRequest(url: url!, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 1000)
         
@@ -233,15 +235,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             
             self.arreglo.removeAll()
+            let (agregados, modificados, errores) = Persona.agregarTodos(datos: datos)
             
-            for d in datos {
+            /*for d in datos {
                 let nombre = (d["nombre"] as! String)
                 let edad = (d["edad"] as! Int)
                 let foto = (d["foto"] as! String)
                 let genero = (d["genero"] as! String)
                 
                 self.arreglo.append(nombre: nombre, edad: edad, genero: genero, foto: foto)
-            }
+            }*/
+            
+            print("Se agregaron: \(agregados) registros; se modificaron \(modificados); \(errores) errores")
         
             self.tblTabla.reloadData()
         })

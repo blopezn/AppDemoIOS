@@ -18,6 +18,8 @@
 		B34EFBD71DF739A900F9634E /* AgregarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34EFBD61DF739A900F9634E /* AgregarViewController.swift */; };
 		B387831D1DF9E9BD0076C341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B387831C1DF9E9BD0076C341 /* GoogleService-Info.plist */; };
 		B38C6E871DF8B8EE00BB6662 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38C6E861DF8B8EE00BB6662 /* UIImageViewExtension.swift */; };
+		B3E4D5D81DFB077F0064DE18 /* basededatos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3E4D5D61DFB077F0064DE18 /* basededatos.xcdatamodeld */; };
+		B3E4D5DB1DFB08710064DE18 /* Persona.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E4D5DA1DFB08710064DE18 /* Persona.swift */; };
 		B3E57D861DF884A6001A835C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E57D851DF884A6001A835C /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		B387831C1DF9E9BD0076C341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B38C6E861DF8B8EE00BB6662 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		B3A26B5A1DF8ACD500CDECF4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		B3E4D5D71DFB077F0064DE18 /* basededatos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = basededatos.xcdatamodel; sourceTree = "<group>"; };
+		B3E4D5DA1DFB08710064DE18 /* Persona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persona.swift; sourceTree = "<group>"; };
 		B3E57D851DF884A6001A835C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DAD34C9A3E44B7B5C4A78529 /* Pods_AppDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -74,6 +78,7 @@
 		50AB0EAB1DF5D7FA00D0C5B8 /* AppDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B3E4D5D91DFB08560064DE18 /* model */,
 				50AB0EAC1DF5D7FA00D0C5B8 /* AppDelegate.swift */,
 				50AB0EAE1DF5D7FA00D0C5B8 /* ViewController.swift */,
 				50AB0EB01DF5D7FA00D0C5B8 /* Main.storyboard */,
@@ -87,8 +92,17 @@
 				B3A26B5A1DF8ACD500CDECF4 /* MyPlayground.playground */,
 				B38C6E861DF8B8EE00BB6662 /* UIImageViewExtension.swift */,
 				B387831C1DF9E9BD0076C341 /* GoogleService-Info.plist */,
+				B3E4D5D61DFB077F0064DE18 /* basededatos.xcdatamodeld */,
 			);
 			path = AppDemo;
+			sourceTree = "<group>";
+		};
+		B3E4D5D91DFB08560064DE18 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				B3E4D5DA1DFB08710064DE18 /* Persona.swift */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		B8E43AA9601481772A7BA49B /* Frameworks */ = {
@@ -235,10 +249,12 @@
 				B3E57D861DF884A6001A835C /* LoginViewController.swift in Sources */,
 				B38C6E871DF8B8EE00BB6662 /* UIImageViewExtension.swift in Sources */,
 				B30888771DF71A6100EF257F /* DetalleViewController.swift in Sources */,
+				B3E4D5DB1DFB08710064DE18 /* Persona.swift in Sources */,
 				50AB0EAF1DF5D7FA00D0C5B8 /* ViewController.swift in Sources */,
 				50AB0EAD1DF5D7FA00D0C5B8 /* AppDelegate.swift in Sources */,
 				50AB0EBF1DF5F71800D0C5B8 /* FilaTableViewCell.swift in Sources */,
 				B34EFBD71DF739A900F9634E /* AgregarViewController.swift in Sources */,
+				B3E4D5D81DFB077F0064DE18 /* basededatos.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +421,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B3E4D5D61DFB077F0064DE18 /* basededatos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B3E4D5D71DFB077F0064DE18 /* basededatos.xcdatamodel */,
+			);
+			currentVersion = B3E4D5D71DFB077F0064DE18 /* basededatos.xcdatamodel */;
+			path = basededatos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 50AB0EA11DF5D7F900D0C5B8 /* Project object */;
 }
